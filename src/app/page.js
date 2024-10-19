@@ -49,22 +49,28 @@ export default function Home() {
       </div>
 
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-6xl mx-auto">
-        {tasks
-          .sort((a, b) => {
-            const priorityOrder = { high: 1, medium: 2, low: 3 };
-            return priorityOrder[a.priority] - priorityOrder[b.priority];
-          })
-          .map((task) => (
-            <li key={task.id} className="bg-white shadow-lg rounded-lg p-4 flex flex-col">
-              <Task
-                task={task}
-                toggleComplete={toggleComplete}
-                deleteTask={deleteTask}
-                editTask={editTask} // Pass editTask function to Task
-              />
-            </li>
-          ))}
-      </ul>
+  {tasks
+    .sort((a, b) => {
+      // Move completed tasks to the bottom
+      if (a.completed && !b.completed) return 1;
+      if (!a.completed && b.completed) return -1;
+
+      // Sort by priority for the remaining tasks
+      const priorityOrder = { high: 1, medium: 2, low: 3 };
+      return priorityOrder[a.priority] - priorityOrder[b.priority];
+    })
+    .map((task) => (
+      <li key={task.id} className="bg-white shadow-lg rounded-lg p-4 flex flex-col">
+        <Task
+          task={task}
+          toggleComplete={toggleComplete}
+          deleteTask={deleteTask}
+          editTask={editTask} // Pass editTask function to Task
+        />
+      </li>
+    ))}
+</ul>
+
 
     </div>
   );
