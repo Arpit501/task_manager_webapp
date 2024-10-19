@@ -1,4 +1,4 @@
-# Task Management App
+# Task Manager
 
 A simple task management application built with React. This app allows users to create, edit, complete, and delete tasks while providing a user-friendly interface.
 
